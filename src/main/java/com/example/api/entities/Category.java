@@ -1,12 +1,17 @@
 package com.example.api.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +23,11 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	//Employee-Category
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private List<Employee> employeers = new ArrayList<>();
 	
 	public Category() {
 	}
@@ -46,6 +56,10 @@ public class Category implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+	
+	public List<Employee> getEmployee() {
+		return employeers;
 	}
 
 	@Override

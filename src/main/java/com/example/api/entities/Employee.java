@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +28,12 @@ public class Employee implements Serializable{
 	private String phone;
 	private String password;
 	
+	//Employee-Category
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+
+	//Employee-User
 	@ManyToMany
 	@JoinTable(name = "tb_employeers_users", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
 	private List<User> users = new ArrayList<>();
@@ -34,12 +41,13 @@ public class Employee implements Serializable{
 	public Employee(){
 	}
 
-	public Employee(Long id, String name, String email, String phone, String password) {
+	public Employee(Long id, String name, String email, String phone, String password, Category category) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		setCategory(category);
 	}
 
 	public Long getId() {
@@ -81,7 +89,19 @@ public class Employee implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	
+	public List<User> getUser() {
+		return users;
+	}
+	
+   public Category getCategory() {
+	   return category;
+	}
+   
+   public void setCategory(Category category) {
+		this.category = category;
+	}
+   
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

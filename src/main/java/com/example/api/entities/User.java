@@ -12,6 +12,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,13 +28,19 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	//Employee-User
 	@JsonIgnore
 	@ManyToMany(mappedBy = "users")
 	private List<Employee> employeers = new ArrayList<>();
 	
+	//User-Order
+	@JsonIgnore
+	@OneToMany(mappedBy = "user")
+	private List<Order> orders = new ArrayList<>();
+	
 	public User(){
 	}
-
+	
 	public User(Long id, String name, String email, String phone, String password) {
 		this.id = id;
 		this.name = name;
