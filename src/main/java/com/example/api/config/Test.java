@@ -9,11 +9,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.example.api.entities.Category;
+import com.example.api.entities.Comment;
 import com.example.api.entities.Employee;
 import com.example.api.entities.Order;
 import com.example.api.entities.User;
+import com.example.api.entities.dto.UserDTO;
 import com.example.api.entities.enums.OrderStatus;
 import com.example.api.repositories.CategoryRepository;
+import com.example.api.repositories.CommentRepository;
 import com.example.api.repositories.EmployeeRepository;
 import com.example.api.repositories.OrderRepository;
 import com.example.api.repositories.UserRepository;
@@ -33,6 +36,9 @@ public class Test implements CommandLineRunner{
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private CommentRepository commentRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -68,5 +74,13 @@ public class Test implements CommandLineRunner{
 		Order o3 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), 20.00, u3 ,OrderStatus.WAITING_PAYMENT);
 		
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		Comment co1 = new Comment(null,Instant.parse("2019-06-20T19:53:07Z"),"Ótimo serviço", "Recomendo demais!", new UserDTO(u1));
+		Comment co2 = new Comment(null,Instant.parse("2019-06-20T19:53:07Z"),"Muito bom", "Sevidor carismático!", new UserDTO(u2));
+		
+		e1.getComments().add(co1);
+		e2.getComments().add(co2);
+		
+		commentRepository.saveAll(Arrays.asList(co1, co2));
 	}
 }

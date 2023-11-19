@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,6 +40,10 @@ public class Employee implements Serializable{
 	@ManyToMany
 	@JoinTable(name = "tb_employeers_users", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
 	private List<User> users = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "employee")
+	private List<Comment> comments = new ArrayList<>();
 	
 	public Employee(){
 	}
@@ -100,6 +107,15 @@ public class Employee implements Serializable{
    
    public void setCategory(Category category) {
 		this.category = category;
+	}
+   
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
    
 	@Override
