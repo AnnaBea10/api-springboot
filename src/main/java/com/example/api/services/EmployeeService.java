@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 import com.example.api.entities.Employee;
 import com.example.api.repositories.EmployeeRepository;
@@ -14,6 +15,7 @@ import com.example.api.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
+@Service
 public class EmployeeService {
 	
 	@Autowired

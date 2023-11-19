@@ -1,16 +1,21 @@
 package com.example.api.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_emplyee")
+@Table(name = "tb_employee")
 public class Employee implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -21,6 +26,10 @@ public class Employee implements Serializable{
 	private String email;
 	private String phone;
 	private String password;
+	
+	@ManyToMany
+	@JoinTable(name = "tb_employeers_users", joinColumns = @JoinColumn(name = "employee_id"), inverseJoinColumns = @JoinColumn(name="user_id"))
+	private List<User> users = new ArrayList<>();
 	
 	public Employee(){
 	}

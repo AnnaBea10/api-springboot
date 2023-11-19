@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.api.entities.Category;
 import com.example.api.repositories.CategoryRepository;
 import com.example.api.services.exceptions.ResourceNotFoundException;
 
+@Service
 public class CategoryService {
 	
 	@Autowired
